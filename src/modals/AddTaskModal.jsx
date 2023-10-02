@@ -6,10 +6,14 @@ import "./modal.css";
 const AddTaskModel = ({ setIsAddModal }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
-  const [priority, setPriority] = useState("");
+  const [status, setStatus] = useState("todo");
+  const [priority, setPriority] = useState("high");
 
   const dispatch = useDispatch();
+
+  const taskList = useSelector((state) => state.task);
+
+  const tasks  = taskList;
 
   const handleClick = (e) => {
     if (e.target.classList.contains("backdrop")) {
@@ -20,16 +24,16 @@ const AddTaskModel = ({ setIsAddModal }) => {
   const handleAdd = (e) => {
     e.preventDefault();
 
+    const task = {
+      id: Math.floor(Math.random() * 1000),
+      title: name,
+      description,
+      status,
+      priority,
+    };
+
     try {
-      dispatch(
-        addTaskAsync({
-          id: Math.floor(Math.random() * 100),
-          title: name,
-          description: description,
-          status: status,
-          priority: priority,
-        })
-      );
+      dispatch(addTaskAsync(task));
       setIsAddModal(false);
     } catch (error) {
       console.log(error);
@@ -45,7 +49,7 @@ const AddTaskModel = ({ setIsAddModal }) => {
               Add your task
             </h1>
           </div>
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleAdd}>
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -176,9 +180,8 @@ const AddTaskModel = ({ setIsAddModal }) => {
                     focus:shadow-outline
                     "
                 type="submit"
-                onClick={(e) => handleAdd(e)}
               >
-                Update Task
+                Add Task
               </button>
             </div>
           </form>

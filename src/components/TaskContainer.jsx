@@ -10,28 +10,52 @@ const TaskContainer = ({
   isEditModal,
   setIsEditModal,
 }) => {
-
   const taskList = useSelector((state) => state.task);
   const { tasks } = taskList;
 
   //   const [isAddModal, setIsAddModal] = useState(false);
   //   const [isEditModal, setIsEditModal] = useState(false);
 
-  let todo = [];
-  let doing = [];
-  let completed = [];
+  // let todo = [];
+  // let doing = [];
+  // let completed = [];
 
-  if (tasks) {
-    tasks.map((task) => {
+  // const [todo, setTodo] = useState([]);
+  // const [doing, setDoing] = useState([]);
+  // const [done, setDone] = useState([]);
+
+  // useEffect(() => {
+  //   tasks.forEach((task) => {
+  //     if (task.status === "todo") {
+  //       todo.push(task);
+  //     } else if (task.status === "doing") {
+  //       doing.push(task);
+  //     } else if (task.status === "done") {
+  //       done.push(task);
+  //     }
+  //   });
+  // }, [tasks, todo, doing, done]);
+
+  const [todo, setTodo] = useState([]);
+  const [doing, setDoing] = useState([]);
+  const [done, setDone] = useState([]);
+
+  useEffect(() => {
+    // Reset the state arrays before recalculating
+    setTodo([]);
+    setDoing([]);
+    setDone([]);
+
+    tasks.forEach((task) => {
       if (task.status === "todo") {
-        todo.push(task);
+        setTodo((prevTodo) => [...prevTodo, task]);
       } else if (task.status === "doing") {
-        doing.push(task);
+        setDoing((prevDoing) => [...prevDoing, task]);
       } else if (task.status === "done") {
-        completed.push(task);
+        setDone((prevDone) => [...prevDone, task]);
       }
     });
-  }
+  }, [tasks]);
   return (
     <div>
       <main
@@ -73,10 +97,10 @@ const TaskContainer = ({
             <div className="flex items-center justify-between">
               <p className="font-medium">Completed</p>
               <p className="text-green-600 px-3 py-1 rounded-md bg-green-200">
-                {completed.length}
+                {done.length}
               </p>
             </div>
-            {completed.map((task) => (
+            {done.map((task) => (
               <StatusCard
                 task={task}
                 key={task.id}
@@ -86,7 +110,12 @@ const TaskContainer = ({
           </div>
         </div>
       </main>
-      {isEditModal && <EditTaskModel setIsEditModal={setIsEditModal} isEditModal={isEditModal} />}
+      {isEditModal && (
+        <EditTaskModel
+          setIsEditModal={setIsEditModal}
+          isEditModal={isEditModal}
+        />
+      )}
       {isAddModal && <AddTaskModel setIsAddModal={setIsAddModal} />}
     </div>
   );

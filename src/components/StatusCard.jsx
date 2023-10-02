@@ -17,7 +17,7 @@ const StatusCard = ({ task, setIsEditModal }) => {
       className="bg-white py-8 px-4 rounded-xl cursor-pointer"
       onClick={(e) => handleClick(e)}
     >
-      <h1 className="font-semibold text-lg mb-3 uppercase">{task.name}</h1>
+      <h1 className="font-semibold text-lg mb-3 uppercase">{task.title}</h1>
       <p className="text-gray-400">{task.description}</p>
 
       <div className="flex items-center justify-between mt-5">

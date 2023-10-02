@@ -34,6 +34,7 @@ const taskSlice = createSlice({
 export const addTaskAsync = (task) => {
   return (dispatch) => {
     dispatch(addTask(task));
+    
   };
 };
 
