@@ -26,9 +26,9 @@ const StatusCard = ({ task, setIsEditModal }) => {
             className="h-3 w-3 rounded-full"
             style={{
               backgroundColor:
-                task.status === "To-do"
+                task.status === "todo"
                   ? "red"
-                  : task.status === "Doing"
+                  : task.status === "doing"
                   ? "yellow"
                   : "green",
             }}

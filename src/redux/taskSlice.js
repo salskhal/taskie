@@ -31,10 +31,21 @@ const taskSlice = createSlice({
   },
 });
 
+export const addTaskAsync = (task) => {
+  return (dispatch) => {
+    dispatch(addTask(task));
+  };
+};
+
 export const deleteTaskAsync = (id) => {
   return (dispatch) => {
     dispatch(deleteTask(id));
-    dispatch(setTask(null));
+  };
+};
+
+export const updateTaskAsync = (task) => {
+  return (dispatch) => {
+    dispatch(updateTask(task));
   };
 };
 

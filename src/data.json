@@ -11,7 +11,7 @@
     "title": "Clean the house",
     "description": "Clean the house with soap and water",
     "status": "doing",
-    "priority": "high"
+    "priority": "medium"
   },
   {
     "id": "3",

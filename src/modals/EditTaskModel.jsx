@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateTask, deleteTaskAsync, setTask } from "../redux/taskSlice";
+import { deleteTaskAsync, updateTaskAsync } from "../redux/taskSlice";
 import "./modal.css";
 
 const EditTaskModel = ({ isEditModal, setIsEditModal }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("To-do");
-  const [priority, setPriority] = useState("Low");
+  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
 
   const dispatch = useDispatch();
 
@@ -35,6 +35,25 @@ const EditTaskModel = ({ isEditModal, setIsEditModal }) => {
 
     try {
       dispatch(deleteTaskAsync(taskData.id));
+      setIsEditModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+
+    try {
+      dispatch(
+        updateTaskAsync({
+          id: taskData.id,
+          title: name,
+          description: description,
+          status: status,
+          priority: priority,
+        })
+      );
       setIsEditModal(false);
     } catch (error) {
       console.log(error);
@@ -126,9 +145,9 @@ const EditTaskModel = ({ isEditModal, setIsEditModal }) => {
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
               >
-                <option value="To-do">To-do</option>
-                <option value="Doing">Doing</option>
-                <option value="Completed">Completed</option>
+                <option value="todo">todo</option>
+                <option value="doing">doing</option>
+                <option value="done">done</option>
               </select>
             </div>
             <div className="mb-4">
@@ -156,9 +175,9 @@ const EditTaskModel = ({ isEditModal, setIsEditModal }) => {
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
               >
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
+                <option value="high">high</option>
+                <option value="medium">medium</option>
+                <option value="low">low</option>
               </select>
             </div>
 
@@ -177,7 +196,7 @@ const EditTaskModel = ({ isEditModal, setIsEditModal }) => {
                     "
                 type="submit"
                 //   disabled={loading}
-                // onClick={(e) => handleSubmit(e)}
+                onClick={(e) => handleEdit(e)}
               >
                 Update Task
               </button>
